@@ -1,0 +1,116 @@
+---
+title: ""
+format: 
+ revealjs:
+  theme: [default, customizations/presentation-custom.scss]
+  footer: "SAFE Report International Module 2024"
+  logo: static/noaa-fisheries-logo.png
+  css: customizations/logo.css
+  slide-number: true
+  revealjs-plugins:
+  mermaid-format: svg
+  cap-location: top
+  smaller: true
+embed-resources: true
+params: 
+    endyr: 2024
+---
+# {.center}
+::: {.titlebox style="text-align:center; font-size: 1.25em;"}
+
+[The International Module of the SAFE Report `r params$endyr`]{.blue-title}
+
+[Pacific Islands Fisheries Science Center]{.blue style="font-size:0.5em;"}
+<br>
+[Fisheries Research and Monitoring Division]{.blue style="font-size:0.5em;"}
+:::
+
+<!---This is how to add comments to a quarto file--->
+
+## Pacific Tuna Annual Catch
+```{r}
+#| echo: false
+
+# I recommend making your figures and tables in separate R files and then just calling the variable in the slide code - this way you can use the same figures/tables for multiple documents.
+
+source("Intl_Module_FigsandTables.R")
+Annual_Figure
+
+```
+
+<!--- This slide just has a table--->
+## Pacific Tuna Annual Catch
+```{r}
+library(gt)
+names(Tuna_Annual)[1]<-"Year"
+Tuna_Annual %>% gt() %>%
+  fmt_number(columns = where(is.numeric),
+  decimals = 0, 
+  use_seps=TRUE) %>%
+  tab_style(
+    style = cell_text(size = px(20)),  
+    locations = cells_body()  # Apply to all body cells
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(20), weight = "bold"),
+    locations = cells_column_labels()  # Apply to header cells
+  )
+```
+
+
+
+<<!--- This slide put two figures side by side--->
+## Pacific Longline Catch
+:::{.content-visible when-format="revealjs"}
+<br>
+<br>
+:::
+
+
+```{r}
+#| layout-ncol: 2
+#| fig-width: 6
+#| fig-height: 4
+
+LLTuna_Figure
+
+LLBILL_Figure
+```
+
+
+
+<!---This slide puts a figure and table next to each other--->
+## Skipjack Pole and Line Catch
+:::{layout="[80,20]"}
+```{r}
+SKJPL_Figure
+```
+
+
+``` {r}
+
+names(SKJPL_Catch)[1]<-"Year"
+SKJPL_Catch %>% gt() %>%
+  fmt_number(columns = where(is.numeric),
+  decimals = 0, 
+  use_seps=TRUE) %>%
+  tab_style(
+    style = cell_text(size = px(20)),  
+    locations = cells_body()  # Apply to all body cells
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(20), weight = "bold"),
+    locations = cells_column_labels()  # Apply to header cells
+  )
+
+```
+:::
+
+
+## Stock Status of Pacific HMS
+```{r}
+
+Kobe1
+
+```
+This is how to add text to your sildes
